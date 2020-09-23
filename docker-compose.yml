@@ -30,6 +30,7 @@ services:
       - "${STORAGE_LOCATION}/transmission/config:/config"
       - "/mnt/gdrive:/media/downloads"
       - "/etc/localtime:/etc/localtime:ro"
+      - "./wait-for-it.sh:/wait-for-it.sh
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
