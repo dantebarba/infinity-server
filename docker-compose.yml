@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  gdrive-mount:
+    image: rclone/rclone:beta
+    container_name: gdrive-mount
+    restart: unless-stopped
+    command: "mount gdrive: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --dir-cache-time 96h --buffer-size 128M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h"
+    volumes:
+      - ${STORAGE_LOCATION}/gdrive:/config/rclone
+      - /mnt/gdrive:/mnt/gdrive:shared
+    privileged: true
+    devices:
+      - /dev/fuse
+    cap_add:
+      - MKNOD
+      - SYS_ADMIN
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      LOG_LEVEL: ${LOG_LEVEL}
+      TZ: ${DOCKER_TZ}
+
+  transmission:
+    image: "linuxserver/transmission"
+    container_name: transmission
+    hostname: transmission
+    restart: unless-stopped
+    volumes:
+      - "${STORAGE_LOCATION}/transmission/config:/config"
+      - "/mnt/gdrive/media/downloads:/downloads"
+      - "/mnt/gdrive/media/blackhole:/watch"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${DOCKER_TZ}
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    depends_on:
+      - gdrive-mount
