@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     volumes:
       - "${STORAGE_LOCATION}/transmission/config:/config"
-      - "/mnt/gdrive:/media"
+      - "/mnt/gdrive:/media/downloads"
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       - PUID=${PUID}
