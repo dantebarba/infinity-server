@@ -1,4 +1,4 @@
 #!/bin/sh
 docker-compose up -d gdrive-mount;
-sleep 10;
+sleep 5;
 docker-compose up -d transmission;
