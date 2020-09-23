@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     volumes:
       - "${STORAGE_LOCATION}/transmission/config:/config"
-      - "/docker/transmission/downloads:/media/downloads"
+      - "${STORAGE_LOCATION}/transmission/downloads:/media/downloads"
       - "/etc/localtime:/etc/localtime:ro"
       - "./wait-for-it.sh:/wait-for-it.sh"
     environment:
