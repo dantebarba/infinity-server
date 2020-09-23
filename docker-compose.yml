@@ -5,7 +5,7 @@ services:
     image: rclone/rclone:beta
     container_name: gdrive-mount
     restart: unless-stopped
-    command: "mount gdrive: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --dir-cache-time 96h --buffer-size 128M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h"
+    command: "mount gcache: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --cache-db-purge --gid ${PGID} --uid ${PUID} --dir-cache-time 48h --buffer-size 32M --drive-chunk-size 16M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h --vfs-cache-mode minimal --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G"
     volumes:
       - ${STORAGE_LOCATION}/gdrive:/config/rclone
       - /mnt/gdrive:/mnt/gdrive:shared
