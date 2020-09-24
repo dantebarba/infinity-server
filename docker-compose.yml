@@ -5,7 +5,7 @@ services:
     image: rclone/rclone:beta
     container_name: gdrive-mount
     restart: unless-stopped
-    command: "mount gdrive: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --dir-cache-time 1h --buffer-size 256M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h --vfs-cache-mode writes"
+    command: "mount gdrive: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --dir-cache-time 1h --buffer-size 256M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h"
     volumes:
       - ${STORAGE_LOCATION}/gdrive:/config/rclone
       - /mnt/gdrive:/mnt/gdrive:shared
@@ -28,7 +28,8 @@ services:
     restart: unless-stopped
     volumes:
       - "${STORAGE_LOCATION}/transmission/config:/config"
-      - "${STORAGE_LOCATION}/transmission/downloads:/media/downloads"
+      - "${TORRENT_CACHE}/incomplete:/media/downloads/incomplete"
+      - "/mnt/gdrive/complete/:/media/downloads/incomplete"
       - "/etc/localtime:/etc/localtime:ro"
       - "./wait-for-it.sh:/wait-for-it.sh"
     environment:
