@@ -23,7 +23,7 @@ services:
 
   gdrive-move:
     image: pfidr/rclone:latest
-    container_name: movies-downstream
+    container_name: gdrive-move
     restart: unless-stopped
     volumes:
       - ${TORRENT_CACHE}/complete:/source
