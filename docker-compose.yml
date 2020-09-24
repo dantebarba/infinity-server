@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${TORRENT_CACHE}/complete:/source
-      - ${STORAGE_LOCATION}/gdrive:/config:ro
+      - ${STORAGE_LOCATION}/gdrive:/config
     environment:
       SYNC_SRC: /source
       SYNC_DEST: gdrive:/complete
