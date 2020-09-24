@@ -34,6 +34,22 @@ services:
       OPTS: ${OPTS}
 
 
+  deluge:
+    image: linuxserver/deluge
+    container_name: deluge
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${DOCKER_TZ}
+      - DELUGE_LOGLEVEL=${LOG_LEVEL} 
+    volumes:
+      - ${STORAGE_LOCATION}/deluge:/config
+      - ${TORRENT_CACHE}/incomplete:/downloads
+      - ${TORRENT_CACHE}/complete:/complete
+      - /mnt/gdrive/watch:/watch
+    restart: unless-stopped
+
   transmission:
     image: "linuxserver/transmission"
     container_name: transmission

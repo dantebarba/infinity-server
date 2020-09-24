@@ -1,5 +1,5 @@
 #!/bin/sh
 docker-compose up -d gdrive-mount;
 sleep 5;
-docker-compose up -d transmission;
-docker-compose up -d autoremove-torrents;
+docker-compose up -d deluge;
+#ocker-compose up -d autoremove-torrents;
