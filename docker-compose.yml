@@ -60,7 +60,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${DOCKER_TZ}
-      - DELUGE_LOGLEVEL=${LOG_LEVEL} 
+      - DELUGE_LOGLEVEL=${LOG_LEVEL_DELUGE} 
     volumes:
       - ${STORAGE_LOCATION}/deluge:/config
       - ${TORRENT_CACHE}:/downloads
