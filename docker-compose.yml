@@ -63,8 +63,7 @@ services:
       - DELUGE_LOGLEVEL=${LOG_LEVEL} 
     volumes:
       - ${STORAGE_LOCATION}/deluge:/config
-      - ${TORRENT_CACHE}/incomplete:/downloads
-      - ${TORRENT_CACHE}/complete:/complete
+      - ${TORRENT_CACHE}:/downloads
       - /mnt/gdrive/watch:/watch
     restart: unless-stopped
 
