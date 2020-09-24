@@ -21,6 +21,19 @@ services:
       LOG_LEVEL: ${LOG_LEVEL}
       TZ: ${DOCKER_TZ}
 
+
+  autoremove-torrents:
+    image: dantebarba/autoremove-torrents:2.0.0
+    container_name: autoremove-torrents
+    restart: unless-stopped
+    volumes:
+      - ${STORAGE_LOCATION}/autoremove-torrents/config.yml:/app/config.yml
+    environment:
+      TZ: ${DOCKER_TZ}
+      CRON: ${CRON}
+      OPTS: ${OPTS}
+
+
   transmission:
     image: "linuxserver/transmission"
     container_name: transmission
