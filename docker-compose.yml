@@ -30,7 +30,7 @@ services:
       - ${STORAGE_LOCATION}/gdrive:/config:ro
     environment:
       SYNC_SRC: /source
-      SYNC_DEST: gdrive:/media/downloads/complete
+      SYNC_DEST: gdrive:/complete
       SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --include *.{mkv,mp4,mpeg,avi,srt,ssa,ttml,vtt,txt} --progress --buffer-size 256M --use-mmap --timeout 1m --stats 120s'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
