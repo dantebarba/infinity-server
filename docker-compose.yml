@@ -29,7 +29,7 @@ services:
     volumes:
       - "${STORAGE_LOCATION}/transmission/config:/config"
       - "${TORRENT_CACHE}/incomplete:/media/downloads/incomplete"
-      - "/mnt/gdrive/complete/:/media/downloads/incomplete"
+      - "/mnt/gdrive/complete/:/media/downloads/complete"
       - "/etc/localtime:/etc/localtime:ro"
       - "./wait-for-it.sh:/wait-for-it.sh"
     environment:
