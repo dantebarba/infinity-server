@@ -28,8 +28,9 @@ services:
     restart: unless-stopped
     volumes:
       - "${STORAGE_LOCATION}/transmission/config:/config"
-      - "${TORRENT_CACHE}/incomplete:/media/downloads/incomplete"
-      - "/mnt/gdrive/complete/:/media/downloads/complete"
+      - "${TORRENT_CACHE}/incomplete:/downloads/incomplete"
+      - "/mnt/gdrive/complete:/downloads/complete"
+      - "/mnt/gdrive/watch:/watch"
       - "/etc/localtime:/etc/localtime:ro"
       - "./wait-for-it.sh:/wait-for-it.sh"
     environment:
