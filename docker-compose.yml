@@ -52,6 +52,24 @@ services:
       OPTS: ${OPTS}
 
 
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${DOCKER_TZ}
+      - WEBUI_PORT=8080
+    volumes:
+      - ${STORAGE_LOCATION}/qbittorrent:/config
+      - ${TORRENT_CACHE}/downloads:/downloads
+      - /mnt/gdrive/watch:/watch
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    restart: unless-stopped
+
   deluge:
     image: linuxserver/deluge
     container_name: deluge
