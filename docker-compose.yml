@@ -31,7 +31,7 @@ services:
     environment:
       SYNC_SRC: /source
       SYNC_DEST: gdrive:/complete
-      SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --include *.{mkv,mp4,mpeg,avi,srt,ssa,ttml,vtt,txt} --progress --buffer-size 256M --drive-chunk-size 256M --use-mmap --timeout 1m --stats 120s'
+      SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --include *.{mkv,mp4,mpeg,avi,srt,ssa,ttml,vtt,txt} --progress --buffer-size 256M --drive-chunk-size 256M --use-mmap --timeout 1m --stats 120s && rclone delete /source --leave-root --exclude *.{mkv,mp4,mpeg,avi,srt,ssa,ttml,vtt,txt}'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
       TZ: ${DOCKER_TZ}
