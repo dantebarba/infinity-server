@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     command: "mount gdrive: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --buffer-size 32M --log-level ${LOG_LEVEL} --stats 1m --use-mmap --timeout 1h --drive-chunk-size 32M"
     volumes:
-      - ${STORAGE_LOCATION}/gdrive:/config/rclone
+      - ${STORAGE_LOCATION}/gdrive:/config/rclone:ro
       - /mnt/gdrive:/mnt/gdrive:shared
     privileged: true
     devices:
