@@ -7,10 +7,12 @@ delete_slow_torrents:
     remove-if-slow-download:
       status:
         - downloading
+        - stalleddownload
       remove: downloading_time > 1020 and average_downloadspeed < 512
     remove-if-timeout:
       status:
         - downloading
+        - stalleddownload
       remove: downloading_time > 12000 and progress < 80
   delete_data: true
 
@@ -20,6 +22,6 @@ delete_completed_torrents:
   username: ${USERNAME}
   password: ${PASSWORD}
   strategies:
-    remove-if-slow-download:
+    remove-if-completed:
       status:
         - completed
