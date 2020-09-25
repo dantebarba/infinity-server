@@ -114,6 +114,6 @@ services:
     environment: 
       QBT_USERNAME: ${QBT_USERNAME}
       QBT_PASSWORD: ${QBT_PASSWORD}
-      CMD: "/Scripts/AddqBittorrentTrackers.sh"
+      CMD: "/bin/sh /Scripts/AddqBittorrentTrackers.sh"
       TZ: ${DOCKER_TZ}
     restart: unless-stopped
