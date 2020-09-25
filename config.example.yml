@@ -1,15 +1,25 @@
 delete_slow_torrents:
-    client: ${CLIENT}
-    host: ${HOST}
-    username: ${USERNAME}
-    password: ${PASSWORD}
-    strategies:
-      remove-if-slow-download:
-        status:
-         - downloading
-        remove: downloading_time > 1020 and average_downloadspeed < 512
-      remove-if-timeout:
-        status:
-         - downloading
-        remove: downloading_time > 12000 and progress < 80
-    delete_data: true
+  client: ${CLIENT}
+  host: ${HOST}
+  username: ${USERNAME}
+  password: ${PASSWORD}
+  strategies:
+    remove-if-slow-download:
+      status:
+        - downloading
+      remove: downloading_time > 1020 and average_downloadspeed < 512
+    remove-if-timeout:
+      status:
+        - downloading
+      remove: downloading_time > 12000 and progress < 80
+  delete_data: true
+
+delete_completed_torrents:
+  client: ${CLIENT}
+  host: ${HOST}
+  username: ${USERNAME}
+  password: ${PASSWORD}
+  strategies:
+    remove-if-slow-download:
+      status:
+        - completed
