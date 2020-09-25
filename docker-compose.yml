@@ -116,4 +116,5 @@ services:
       QBT_PASSWORD: ${QBT_PASSWORD}
       CMD: "/bin/bash /Scripts/AddqBittorrentTrackers.sh ."
       TZ: ${DOCKER_TZ}
+      CRON: '*/5 * * * *'
     restart: unless-stopped
