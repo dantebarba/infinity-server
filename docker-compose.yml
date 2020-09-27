@@ -35,7 +35,7 @@ services:
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
       TZ: ${DOCKER_TZ}
-      CRON: '* * * * *'
+      CRON: ${MOVE_CRON}
       UID: ${PUID}
       GID: ${PGID}
 
