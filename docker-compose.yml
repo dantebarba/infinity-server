@@ -50,6 +50,7 @@ services:
     volumes:
       - ${STORAGE_LOCATION}/nzbget:/config
       - ${TORRENT_CACHE}/downloads:/downloads
+      - /mnt/gdrive:/watch
     ports:
       - 6789:6789
     restart: unless-stopped
