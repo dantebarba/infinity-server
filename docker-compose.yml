@@ -40,6 +40,20 @@ services:
       GID: ${PGID}
 
 
+    nzbget:
+      image: linuxserver/nzbget
+      container_name: nzbget
+      environment:
+        - PUID=${PUID}
+        - PGID=${PUID}
+        - TZ=${DOCKER_TZ}
+      volumes:
+        - ${STORAGE_LOCATION}/nzbget:/config
+        - ${TORRENT_CACHE}/downloads:/downloads
+      ports:
+        - 6789:6789
+      restart: unless-stopped
+
   autoremove-torrents:
     image: dantebarba/autoremove-torrents:dev
     container_name: autoremove-torrents
@@ -69,44 +83,6 @@ services:
       - 6881:6881/udp
       - 8080:8080
     restart: unless-stopped
-
-  deluge:
-    image: linuxserver/deluge
-    container_name: deluge
-    network_mode: host
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${DOCKER_TZ}
-      - DELUGE_LOGLEVEL=${LOG_LEVEL_DELUGE} 
-    volumes:
-      - ${STORAGE_LOCATION}/deluge:/config
-      - ${TORRENT_CACHE}:/downloads
-      - /mnt/gdrive/watch:/watch
-    restart: unless-stopped
-
-  transmission:
-    image: "linuxserver/transmission"
-    container_name: transmission
-    hostname: transmission
-    restart: unless-stopped
-    volumes:
-      - "${STORAGE_LOCATION}/transmission/config:/config"
-      - "${TORRENT_CACHE}/incomplete:/downloads/incomplete"
-      - "/mnt/gdrive/complete:/downloads/complete"
-      - "/mnt/gdrive/watch:/watch"
-      - "/etc/localtime:/etc/localtime:ro"
-      - "./wait-for-it.sh:/wait-for-it.sh"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${DOCKER_TZ}
-    ports:
-      - "9091:9091"
-      - "51413:51413"
-      - "51413:51413/udp"
-    depends_on:
-      - gdrive-mount
 
   tracker-annunce:
     image: dantebarba/torrent-scripts:latest
