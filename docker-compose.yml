@@ -21,17 +21,35 @@ services:
       LOG_LEVEL: ${LOG_LEVEL}
       TZ: ${DOCKER_TZ}
 
-  gdrive-move:
+  gdrive-move-torrents:
     image: pfidr/rclone:latest
-    container_name: gdrive-move
+    container_name: gdrive-move-torrents
     restart: unless-stopped
     volumes:
-      - ${TORRENT_CACHE}/downloads/complete:/source
+      - ${TORRENT_CACHE}/downloads/complete/torrent:/source
       - ${STORAGE_LOCATION}/gdrive:/config
     environment:
       SYNC_SRC: /source
-      SYNC_DEST: ${GDRIVE_SERVICE}:/complete
+      SYNC_DEST: ${GDRIVE_SERVICE}:/complete/torrent
       SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --stats 120s --buffer-size 128M --drive-chunk-size 128M --use-mmap --timeout 1m'
+      RCLONE_DIR_CHECK_SKIP: 'true'
+      RCLONE_CMD: move
+      TZ: ${DOCKER_TZ}
+      CRON: ${MOVE_CRON}
+      UID: ${PUID}
+      GID: ${PGID}
+
+  gdrive-move-nzb:
+    image: pfidr/rclone:latest
+    container_name: gdrive-move-nzb
+    restart: unless-stopped
+    volumes:
+      - ${TORRENT_CACHE}/downloads/complete/nzb:/source
+      - ${STORAGE_LOCATION}/gdrive:/config
+    environment:
+      SYNC_SRC: /source
+      SYNC_DEST: ${GDRIVE_SERVICE}:/complete/nzb
+      SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --stats 120s --buffer-size 128M --drive-chunk-size 128M --use-mmap --timeout 1m --exclude _unpack/'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
       TZ: ${DOCKER_TZ}
