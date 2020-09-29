@@ -1,5 +1,6 @@
 #!/bin/sh
-docker-compose up -d gdrive-move;
+docker-compose up -d gdrive-move-torrents;
+docker-compose up -d gdrive-move-nzb;
 docker-compose up -d gdrive-mount;
 sleep 5;
 docker-compose up -d qbittorrent;
