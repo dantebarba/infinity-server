@@ -40,19 +40,19 @@ services:
       GID: ${PGID}
 
 
-    nzbget:
-      image: linuxserver/nzbget
-      container_name: nzbget
-      environment:
-        - PUID=${PUID}
-        - PGID=${PUID}
-        - TZ=${DOCKER_TZ}
-      volumes:
-        - ${STORAGE_LOCATION}/nzbget:/config
-        - ${TORRENT_CACHE}/downloads:/downloads
-      ports:
-        - 6789:6789
-      restart: unless-stopped
+  nzbget:
+    image: linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${DOCKER_TZ}
+    volumes:
+      - ${STORAGE_LOCATION}/nzbget:/config
+      - ${TORRENT_CACHE}/downloads:/downloads
+    ports:
+      - 6789:6789
+    restart: unless-stopped
 
   autoremove-torrents:
     image: dantebarba/autoremove-torrents:dev
