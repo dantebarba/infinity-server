@@ -58,9 +58,9 @@ services:
       GID: ${PGID}
 
 
-  nzbhydra2:
+  nzbhydra:
     image: linuxserver/nzbhydra2
-    container_name: nzbhydra2
+    container_name: nzbhydra
     environment:
       - PUID=${PUID}
       - PGID=${PUID}
