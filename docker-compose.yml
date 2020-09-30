@@ -26,11 +26,11 @@ services:
     container_name: gdrive-move-torrents
     restart: unless-stopped
     volumes:
-      - ${TORRENT_CACHE}/downloads/complete/torrent:/source
+      - ${TORRENT_CACHE}/downloads/torrent/complete:/source
       - ${STORAGE_LOCATION}/gdrive:/config
     environment:
       SYNC_SRC: /source
-      SYNC_DEST: ${GDRIVE_SERVICE}:/complete/torrent
+      SYNC_DEST: ${GDRIVE_SERVICE}:/torrent/complete
       SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --stats 120s --buffer-size 128M --drive-chunk-size 128M --use-mmap --timeout 1m'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
@@ -44,11 +44,11 @@ services:
     container_name: gdrive-move-nzb
     restart: unless-stopped
     volumes:
-      - ${TORRENT_CACHE}/downloads/complete/nzb:/source
+      - ${TORRENT_CACHE}/downloads/nzb/complete:/source
       - ${STORAGE_LOCATION}/gdrive:/config
     environment:
       SYNC_SRC: /source
-      SYNC_DEST: ${GDRIVE_SERVICE}:/complete/nzb
+      SYNC_DEST: ${GDRIVE_SERVICE}:/nzb/complete
       SYNC_OPTS: '--log-level ${LOG_LEVEL} --delete-empty-src-dirs --stats 120s --buffer-size 128M --drive-chunk-size 128M --use-mmap --timeout 1m --exclude _unpack/'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: move
