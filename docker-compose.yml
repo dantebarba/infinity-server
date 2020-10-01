@@ -57,21 +57,6 @@ services:
       UID: ${PUID}
       GID: ${PGID}
 
-
-  nzbhydra:
-    image: linuxserver/nzbhydra2
-    container_name: nzbhydra
-    environment:
-      - PUID=${PUID}
-      - PGID=${PUID}
-      - TZ=${DOCKER_TZ}
-    volumes:
-      - ${STORAGE_LOCATION}/nzbhydra2:/config
-      - /mnt/gdrive:/downloads
-    ports:
-      - 5076:5076
-    restart: unless-stopped
-
   nzbget:
     image: linuxserver/nzbget
     container_name: nzbget
