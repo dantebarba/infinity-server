@@ -119,9 +119,9 @@ services:
     volumes:
       - ${STORAGE_LOCATION}/gdrive:/config
     environment:
-      CRON: '0 * * * *' # will renew the SA number once every hour
-      MAX_NUMBER: 4 # the number of SAs you generated
-      PREFIX: '/config/sa/blackhole-' # the prefix with path included before the SA Number.
+      CRON: ${AUTOSWAP_CRON} # will renew the SA number once every hour
+      MAX_NUMBER: ${SA_NUMBER} # the number of SAs you generated
+      PREFIX: ${SA_PREFIX} # the prefix with path included before the SA Number.
       # SAs should be named with the following schema: my-sa-{number}.json where number is the SA designated number.
       # this number should be sequential, from 1 to n.
 
