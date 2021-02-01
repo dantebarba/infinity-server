@@ -73,7 +73,7 @@ services:
     restart: unless-stopped
 
   autoremove-torrents:
-    image: dantebarba/autoremove-torrents:dev
+    image: dantebarba/autoremove-torrents:1.7.1
     container_name: autoremove-torrents
     restart: unless-stopped
     volumes:
@@ -124,4 +124,3 @@ services:
       PREFIX: ${SA_PREFIX} # the prefix with path included before the SA Number.
       # SAs should be named with the following schema: my-sa-{number}.json where number is the SA designated number.
       # this number should be sequential, from 1 to n.
-
