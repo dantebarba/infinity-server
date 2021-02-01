@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   gdrive-mount:
-    image: rclone/rclone:beta
+    image: rclone/rclone:latest
     container_name: gdrive-mount
     restart: unless-stopped
     command: "mount gdrive-watch: /mnt/gdrive --config=/config/rclone/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --log-level ${LOG_LEVEL} --use-mmap --timeout 5m --dir-cache-time 2m --default-permissions --umask 002"
