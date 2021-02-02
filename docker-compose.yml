@@ -85,7 +85,7 @@ services:
 
 
   qbittorrent:
-    image: linuxserver/qbittorrent:14.3.0.99202010231047-7094-260e48b70ubuntu18.04.1-ls99
+    image: linuxserver/qbittorrent:14.3.2.99202012272006-7195-abb854a1eubuntu18.04.1-ls107
     container_name: qbittorrent
     environment:
       - PUID=${PUID}
