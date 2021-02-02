@@ -66,7 +66,7 @@ services:
       - TZ=${DOCKER_TZ}
     volumes:
       - ${STORAGE_LOCATION}/nzbget:/config
-      - ${TORRENT_CACHE}/downloads:/downloads
+      - ${STORAGE_LOCATION}/downloads/nzb:/downloads
       - /mnt/gdrive:/watch
     ports:
       - 6789:6789
@@ -94,7 +94,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${STORAGE_LOCATION}/qbittorrent:/config
-      - ${TORRENT_CACHE}/downloads:/downloads
+      - ${STORAGE_LOCATION}/downloads/torrent:/downloads
       - /mnt/gdrive:/watch
     ports:
       - 6881:6881
