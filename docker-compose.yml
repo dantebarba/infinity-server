@@ -5,7 +5,7 @@ services:
     image: rclone/rclone:latest
     container_name: gdrive-mount
     restart: unless-stopped
-    command: "mount ${GDRIVE_SERVICE}: /mnt/gdrive --config=/config/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --log-level ${LOG_LEVEL} --use-mmap --timeout 5m --dir-cache-time 2m --default-permissions --umask 002"
+    command: "mount ${GDRIVE_SERVICE}:/watch /mnt/gdrive --config=/config/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --log-level ${LOG_LEVEL} --use-mmap --timeout 5m --dir-cache-time 2m --default-permissions --umask 002"
     volumes:
       - ${STORAGE_LOCATION}/gdrive:/config
       - /mnt/gdrive:/mnt/gdrive:shared
