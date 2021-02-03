@@ -8,11 +8,13 @@ domain=${domain:-infinity.local}
 read -p "Enter storage location: " storage
 storage=${storage:-/root/storage}
 read -p "Enter url to download configuration: " directory
+read -p "Enter url to download git repo: " repo
+repo=${project:-https://github.com/dantebarba/infinity-server/archive/0.1.tar.gz}
 
 echo 'INFO: RUNNING INSTALL SCRIPT --- PLEASE WAIT';
-echo 'INFO: your domain is: $domain'
-echo 'INFO: your storage location is: $storage'
-echo 'INFO: directory structure location: $directory'
+echo 'INFO: your domain is: '${domain}
+echo 'INFO: your storage location is: '${storage}
+echo 'INFO: directory structure location: '${directory}
 
 read -p "Please copy your ssh id using ssh-add-id and then press Y (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1;
 echo 'INFO: Removing SSH password authentication';
@@ -39,8 +41,8 @@ echo 'INFO: Installing Docker-compose';
 curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
 chmod +x /usr/local/bin/docker-compose;
 
-echo 'INFO: Cloning repository';
-git clone https://github.com/dantebarba/infinity-server.git;
+echo 'INFO: downloading repository';
+wget --no-check-certificate -c $repo -O - | tar -xz;
 
 echo 'INFO: Adding env-vars';
 touch /etc/environment;
@@ -57,7 +59,7 @@ touch /etc/resolv.conf;
 nameserver 1.0.0.1" > /etc/resolv.conf;
 
 echo 'INFO: creating directory structure'
-wget -c $directory -O - | tar -xz;
+wget --no-check-certificate -c $directory -O - | tar -xz;
 
 echo 'INFO: creating watchdir';
 mkdir /mnt/gdrive;
@@ -73,8 +75,8 @@ chmod +x start.sh && bash start.sh;
 
 echo 'INFO: Services started successfully';
 ip=ip route get 1 | awk '{print $NF;exit}';
-echo 'Access your qbittorrent instance at ${ip}:8080 with username admin and password adminadmin then change its password';
-echo 'Access your nzb instance at ${ip}:6789 with username nzbget and password nzbget then change its password';
+echo 'Access your qbittorrent instance at '${ip}':8080 with username admin and password adminadmin then change its password';
+echo 'Access your nzb instance at '${ip}':6789 with username nzbget and password nzbget then change its password';
 exit 0;
 
 
