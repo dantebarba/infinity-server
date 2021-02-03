@@ -19,7 +19,7 @@ echo 'INFO: repo location: '${repo}
 
 read -p "Please copy your ssh id using ssh-add-id and then press Y (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1;
 echo 'INFO: Removing SSH password authentication';
-sed -i 's/PasswordAuthentication yes/#PasswordAuthentication yes/g' /etc/environment;
+sed -i 's/PasswordAuthentication yes/#PasswordAuthentication yes/g' /etc/ssh/sshd_conf;
 echo 'INFO: installing requiered dependencies';
 apt-get update;
 apt-get -y install nano vnstat cron curl htop fail2ban git;
