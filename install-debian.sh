@@ -43,7 +43,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compo
 chmod +x /usr/local/bin/docker-compose;
 
 echo 'INFO: downloading repository';
-wget --no-check-certificate -c $repo -O - | tar -xz;
+wget --no-check-certificate -c "$repo" -O - | tar -xz;
 
 echo 'INFO: Adding env-vars';
 touch /etc/environment;
@@ -63,7 +63,7 @@ echo "nameserver 1.1.1.1" >> /etc/resolv.conf;
 echo "nameserver 1.0.0.1" >> /etc/resolv.conf;
 
 echo 'INFO: creating directory structure'
-wget --no-check-certificate -c $directory -O - | tar -xz;
+wget --no-check-certificate -c "$directory" -O - | tar -xz;
 
 echo 'INFO: creating watchdir';
 mkdir /mnt/gdrive;
