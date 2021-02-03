@@ -47,11 +47,13 @@ wget --no-check-certificate -c $repo -O - | tar -xz;
 
 echo 'INFO: Adding env-vars';
 touch /etc/environment;
-"DOMAIN_URL=$domain
-PGID=1000
-PUID=1000
-DOCKER_TZ=America/Argentina/Buenos_Aires
-STORAGE_LOCATION=$storage" > /etc/environment;
+
+echo "DOMAIN_URL=$domain" >> /etc/environment;
+echo "PGID=1000" >> /etc/environment;
+echo "PUID=1000" >> /etc/environment;
+echo "DOCKER_TZ=America/Argentina/Buenos_Aires" >> /etc/environment;
+echo "STORAGE_LOCATION=$storage" >> /etc/environment;
+
 for env in $( cat /etc/environment ); do export $(echo $env | sed -e 's/"//g'); done;
 
 echo 'INFO: Configuring DNS';
