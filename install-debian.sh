@@ -6,7 +6,7 @@ set -e;
 read -p "Enter your domain name [infinity.local]: " domain
 domain=${domain:-infinity.local}
 read -p "Enter storage location: " storage
-storage=${storage:-/root/storage}
+storage=${storage:-$HOME}
 read -p "Enter url to download configuration: " directory
 read -p "Enter url to download git repo: " repo
 repo=${project:-https://github.com/dantebarba/infinity-server/archive/0.1.tar.gz}
