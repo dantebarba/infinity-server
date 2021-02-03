@@ -24,7 +24,7 @@ echo 'INFO: installing requiered dependencies';
 apt-get update;
 apt-get -y install nano vnstat cron curl htop fail2ban git;
 echo 'INFO: Installing docker';
-apt-get install \
+apt-get -y install \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -36,7 +36,7 @@ add-apt-repository \
    $(lsb_release -cs) \
    stable";
 apt-get update;
-apt-get install docker-ce docker-ce-cli containerd.io;
+apt-get -y install docker-ce docker-ce-cli containerd.io;
 adduser dockeruser;
 echo 'INFO: Installing Docker-compose';
 curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
