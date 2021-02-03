@@ -58,8 +58,9 @@ for env in $( cat /etc/environment ); do export $(echo $env | sed -e 's/"//g'); 
 
 echo 'INFO: Configuring DNS';
 touch /etc/resolv.conf;
-"nameserver 1.1.1.1
-nameserver 1.0.0.1" > /etc/resolv.conf;
+
+echo "nameserver 1.1.1.1" >> /etc/resolv.conf;
+echo "nameserver 1.0.0.1" >> /etc/resolv.conf;
 
 echo 'INFO: creating directory structure'
 wget --no-check-certificate -c $directory -O - | tar -xz;
