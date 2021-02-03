@@ -15,6 +15,7 @@ echo 'INFO: RUNNING INSTALL SCRIPT --- PLEASE WAIT';
 echo 'INFO: your domain is: '${domain}
 echo 'INFO: your storage location is: '${storage}
 echo 'INFO: directory structure location: '${directory}
+echo 'INFO: repo location: '${repo}
 
 read -p "Please copy your ssh id using ssh-add-id and then press Y (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1;
 echo 'INFO: Removing SSH password authentication';
@@ -74,7 +75,7 @@ echo 'INFO: starting services';
 chmod +x start.sh && bash start.sh;
 
 echo 'INFO: Services started successfully';
-ip=ip route get 1 | awk '{print $NF;exit}';
+ip=ip=$(ip route get 1 | awk '{print $1;exit}');
 echo 'Access your qbittorrent instance at '${ip}':8080 with username admin and password adminadmin then change its password';
 echo 'Access your nzb instance at '${ip}':6789 with username nzbget and password nzbget then change its password';
 exit 0;
