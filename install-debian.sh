@@ -42,6 +42,12 @@ echo 'INFO: Installing Docker-compose';
 curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
 chmod +x /usr/local/bin/docker-compose;
 
+echo 'INFO: downloading repository';
+wget --no-check-certificate -c "$repo" -O - | tar -xz -C $storage;
+
+echo 'INFO: creating directory structure'
+wget --no-check-certificate -c "$directory" -O - | tar -xz -C $storage;
+
 echo 'INFO: Adding env-vars';
 touch /etc/environment;
 
@@ -49,12 +55,9 @@ echo "DOMAIN_URL=$domain" >> /etc/environment;
 echo "PGID=1000" >> /etc/environment;
 echo "PUID=1000" >> /etc/environment;
 echo "DOCKER_TZ=America/Argentina/Buenos_Aires" >> /etc/environment;
-echo "STORAGE_LOCATION=$storage" >> /etc/environment;
+echo "STORAGE_LOCATION=${storage}/infinity-node/" >> /etc/environment;
 
 for env in $( cat /etc/environment ); do export $(echo $env | sed -e 's/"//g'); done;
-
-echo 'INFO: downloading repository';
-wget --no-check-certificate -c "$repo" -O - | tar -xz -C $STORAGE_LOCATION;
 
 echo 'INFO: Configuring DNS';
 touch /etc/resolv.conf;
@@ -62,9 +65,6 @@ touch /etc/resolv.conf;
 
 echo "nameserver 1.1.1.1" >> /etc/resolv.conf;
 echo "nameserver 1.0.0.1" >> /etc/resolv.conf;
-
-echo 'INFO: creating directory structure'
-wget --no-check-certificate -c "$directory" -O - | tar -xz -C $STORAGE_LOCATION;
 
 echo 'INFO: creating watchdir';
 mkdir /mnt/gdrive;
