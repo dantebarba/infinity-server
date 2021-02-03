@@ -22,7 +22,7 @@ echo 'INFO: Removing SSH password authentication';
 sed -i 's/PasswordAuthentication yes/#PasswordAuthentication yes/g' /etc/environment;
 echo 'INFO: installing requiered dependencies';
 apt-get update;
-apt-get nano vnstat cron curl htop fail2ban git;
+apt-get install nano vnstat cron curl htop fail2ban git;
 echo 'INFO: Installing docker';
 apt-get install \
     apt-transport-https \
