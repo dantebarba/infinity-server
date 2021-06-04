@@ -79,7 +79,7 @@ echo 'INFO: starting services';
 chmod +x start.sh && bash start.sh;
 
 echo 'INFO: Services started successfully';
-ip=ip=$(ip route get 1 | awk '{print $1;exit}');
+ip=$(ip route get 1 | awk '{print $1;exit}');
 echo 'Access your qbittorrent instance at '${ip}':8080 with username admin and password adminadmin then change its password';
 echo 'Access your nzb instance at '${ip}':6789 with username nzbget and password nzbget then change its password';
 exit 0;
