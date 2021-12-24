@@ -11,6 +11,9 @@ read -p "Enter url to download configuration: " directory
 read -p "Enter url to download git repo: " repo
 repo=${repo:-https://github.com/dantebarba/infinity-server/archive/0.1.tar.gz}
 
+read -p "Enter secrets url: " secrets
+secrets=${secrets}
+
 echo 'INFO: RUNNING INSTALL SCRIPT --- PLEASE WAIT';
 echo 'INFO: your domain is: '${domain}
 echo 'INFO: your storage location is: '${storage}
@@ -22,7 +25,7 @@ echo 'INFO: Removing SSH password authentication';
 sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config;
 echo 'INFO: installing requiered dependencies';
 apt-get update;
-apt-get -y install nano vnstat cron curl htop fail2ban git;
+apt-get -y install nano vnstat cron curl htop fail2ban git ncdu;
 echo 'INFO: Installing docker';
 apt-get -y install \
     apt-transport-https \
@@ -42,8 +45,11 @@ echo 'INFO: Installing Docker-compose';
 curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
 chmod +x /usr/local/bin/docker-compose;
 
-echo 'INFO: downloading repository';
-wget --no-check-certificate -c "$repo" -O - | tar -xz -C $storage;
+echo 'INFO: cloning repository';
+git clone "$repo" && export git_repo=$(basename "$repo" .git);
+
+echo 'INFO: downloading secrets';
+wget --no-check-certificate -c "$secrets" -O $git_repo
 
 echo 'INFO: creating directory structure'
 wget --no-check-certificate -c "$directory" -O - | tar -xz -C $storage;
@@ -73,7 +79,10 @@ echo 'INFO: applying permissions';
 chown -R dockeruser:dockeruser $STORAGE_LOCATION /mnt/gdrive;
 
 echo 'INFO: pulling images from docker hub';
-cd $HOME/infinity-server && docker-compose pull;
+cd $HOME/$git_repo && docker-compose pull;
+
+echo 'INFO: installing watch crontab';
+crontab -l | { cat; echo "* * * * * touch /mnt/gdrive"; } | crontab -;
 
 echo 'INFO: starting services';
 chmod +x start.sh && bash start.sh;
