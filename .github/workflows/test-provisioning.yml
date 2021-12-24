@@ -23,5 +23,5 @@ jobs:
       - name: Run script file
         run: |
            chmod +x "install-debian.sh"
-           install-debian.sh
+           sudo bash install-debian.sh
         shell: bash
