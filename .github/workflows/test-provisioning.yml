@@ -23,5 +23,5 @@ jobs:
       - name: Run script file
         run: |
            chmod +x "install-debian.sh"
-           bash "provision.sh"
+           sudo bash "provision.sh"
         shell: bash
