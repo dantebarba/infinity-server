@@ -26,4 +26,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Provisioning VM
-        run: bash install-debian.sh
+      - run: |
+          # make file runnable, might not be necessary
+          chmod +x "${GITHUB_WORKSPACE}/.github/install-debian.sh"
+          # run script
+          "${GITHUB_WORKSPACE}/.github/install-debian.sh"
