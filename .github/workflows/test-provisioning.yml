@@ -23,5 +23,5 @@ jobs:
       - name: Run script file
         run: |
            chmod +x "install-debian.sh"
-           echo "Goodbye"
+           ./install-debian.sh
         shell: bash
