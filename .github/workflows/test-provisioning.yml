@@ -22,6 +22,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run script file
         run: |
-           chmod +x install-debian.sh
-           ./install-debian.sh
+           echo "Hello"
+           echo "Goodbye"
         shell: bash
