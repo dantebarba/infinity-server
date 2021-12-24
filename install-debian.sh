@@ -1,6 +1,5 @@
 #!/bin/bash
 # run this script to install infinity server onto any node.
-
 set -e;
 
 read -p "Enter your domain name [infinity.local]: " domain
