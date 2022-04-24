@@ -181,7 +181,7 @@ services:
       - "group=storage"
     environment:
       SYNC_SRC: ${GDRIVE_SERVICE}:/nzb/complete/
-      SYNC_OPTS: '--log-level ${LOG_LEVEL} --min-age=2d'
+      SYNC_OPTS: '--log-level ${LOG_LEVEL} --min-age=2d && rclone rmdirs ${GDRIVE_SERVICE}:/nzb/complete/ --config /config/rclone.conf --leave-root'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: delete
       TZ: ${DOCKER_TZ}
