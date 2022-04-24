@@ -161,7 +161,7 @@ services:
       - "group=storage"
     environment:
       SYNC_SRC: ${GDRIVE_SERVICE}:/torrent/complete/
-      SYNC_OPTS: '--log-level ${LOG_LEVEL} --min-age=2d --rmdirs --drive-server-side-across-configs && rclone rmdirs $SYNC_SRC --leave-root'
+      SYNC_OPTS: '--log-level ${LOG_LEVEL} --min-age=2d --rmdirs --drive-server-side-across-configs && rclone rmdirs ${GDRIVE_SERVICE}:/torrent/complete/ --leave-root'
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: delete
       TZ: ${DOCKER_TZ}
