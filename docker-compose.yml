@@ -168,6 +168,7 @@ services:
       CRON: ${MOVE_CRON}
       UID: ${PUID}
       GID: ${PGID}
+      FORCE_SYNC: '1'
 
   gdrive-delete-downloads-nzb:
     image: pfidr/rclone:1.56.2
@@ -187,3 +188,4 @@ services:
       CRON: ${MOVE_CRON}
       UID: ${PUID}
       GID: ${PGID}
+      FORCE_SYNC: '1'
