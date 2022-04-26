@@ -165,7 +165,7 @@ services:
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: delete
       TZ: ${DOCKER_TZ}
-      CRON: ${MOVE_CRON}
+      CRON: ${DELETE_CRON}
       UID: ${PUID}
       GID: ${PGID}
       FORCE_SYNC: '1'
@@ -185,7 +185,7 @@ services:
       RCLONE_DIR_CHECK_SKIP: 'true'
       RCLONE_CMD: delete
       TZ: ${DOCKER_TZ}
-      CRON: ${MOVE_CRON}
+      CRON: ${DELETE_CRON}
       UID: ${PUID}
       GID: ${PGID}
       FORCE_SYNC: '1'
