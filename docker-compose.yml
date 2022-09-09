@@ -1,27 +1,25 @@
 version: '3.5'
 
 services:
-  gdrive-mount:
-    image: rclone/rclone:1.56.2
-    container_name: gdrive-mount
+  gdrive-move-watch:
+    image: pfidr/rclone:1.56.2
+    container_name: gdrive-move-watch
     restart: unless-stopped
-    command: "mount ${GDRIVE_SERVICE}:/watch /mnt/gdrive --config=/config/rclone.conf --allow-other --gid ${PGID} --uid ${PUID} --log-level ${LOG_LEVEL} --use-mmap --timeout 5m --dir-cache-time 2m --default-permissions --umask 002"
     volumes:
+      - ${STORAGE_LOCATION}/downloads/watch:/source
       - ${STORAGE_LOCATION}/gdrive:/config
-      - /mnt/gdrive:/mnt/gdrive:shared
-    privileged: true
-    devices:
-      - /dev/fuse
-    cap_add:
-      - MKNOD
-      - SYS_ADMIN
     labels:
       - "group=storage"
     environment:
-      PGID: ${PGID}
-      PUID: ${PUID}
-      LOG_LEVEL: ${LOG_LEVEL}
+      SYNC_SRC: ${GDRIVE_SERVICE}:/watch
+      SYNC_DEST: /source
+      SYNC_OPTS: '--log-level ${LOG_LEVEL} --stats 120s --buffer-size 16M --drive-chunk-size 16M --use-mmap --timeout 30s'
+      RCLONE_DIR_CHECK_SKIP: 'true'
+      RCLONE_CMD: move
       TZ: ${DOCKER_TZ}
+      CRON: ${MOVE_CRON}
+      UID: ${PUID}
+      GID: ${PGID}
 
   gdrive-move-torrents:
     image: pfidr/rclone:1.56.2
@@ -73,7 +71,7 @@ services:
     volumes:
       - ${STORAGE_LOCATION}/nzbget:/config
       - ${STORAGE_LOCATION}/downloads/nzb:/downloads
-      - /mnt/gdrive:/watch
+      - ${STORAGE_LOCATION}/downloads/watch:/watch
     ports:
       - 6789:6789
     restart: unless-stopped
@@ -101,7 +99,7 @@ services:
     volumes:
       - ${STORAGE_LOCATION}/qbittorrent:/config
       - ${STORAGE_LOCATION}/downloads/torrent:/downloads
-      - /mnt/gdrive:/watch
+      - ${STORAGE_LOCATION}/downloads/watch:/watch
     ports:
       - 6881:6881
       - 6881:6881/udp
