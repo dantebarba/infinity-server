@@ -68,7 +68,9 @@ echo 'INFO: pulling images from docker hub';
 cd $HOME/$git_repo && docker-compose pull;
 
 echo 'INFO: installing watch crontab';
-crontab -l | { cat; echo "* * * * * touch /mnt/gdrive"; } | crontab -;
+# crontab -l | { cat; echo "* * * * * touch /mnt/gdrive"; } | crontab -;
+crontab -l | { cat; echo "@weekly $HOME/infinity-server/ccleaner.sh >> /var/log/ccleaner.log 2>&1"; } | crontab -;
+crontab -l | { cat; echo "@reboot $HOME/infinity-server/ccleaner.sh >> /var/log/ccleaner.log 2>&1"; } | crontab -;
 
 echo 'INFO: starting services';
 chmod +x start.sh && bash start.sh;
