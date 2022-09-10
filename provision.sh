@@ -59,16 +59,15 @@ echo "nameserver 1.1.1.1" >> /etc/resolv.conf;
 echo "nameserver 1.0.0.1" >> /etc/resolv.conf;
 
 echo 'INFO: creating watchdir';
-mkdir /mnt/gdrive;
+mkdir $STORAGE_LOCATION/downloads/watch;
 
 echo 'INFO: applying permissions';
-chown -R dockeruser:dockeruser $STORAGE_LOCATION /mnt/gdrive;
+chown -R dockeruser:dockeruser $STORAGE_LOCATION;
 
 echo 'INFO: pulling images from docker hub';
 cd $HOME/$git_repo && docker-compose pull;
 
 echo 'INFO: installing watch crontab';
-# crontab -l | { cat; echo "* * * * * touch /mnt/gdrive"; } | crontab -;
 crontab -l | { cat; echo "@weekly $HOME/infinity-server/ccleaner.sh >> /var/log/ccleaner.log 2>&1"; } | crontab -;
 crontab -l | { cat; echo "@reboot $HOME/infinity-server/ccleaner.sh >> /var/log/ccleaner.log 2>&1"; } | crontab -;
 
