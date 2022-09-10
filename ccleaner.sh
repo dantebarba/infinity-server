@@ -19,7 +19,7 @@
 /usr/bin/curl --silent https://gist.githubusercontent.com/macropin/3d06cd315a07c9d8530f/raw | /bin/bash -s rm-dangling
 /usr/bin/echo "INFO: stopping all containers"
 /usr/bin/docker stop $(/usr/bin/docker ps -aq)
-/usr/bin/echo "INFO: Restarting virtual storage"
+/usr/bin/echo "INFO: Restarting gdrive sync"
 /usr/bin/docker start $(/usr/bin/docker ps -aq --filter 'label=group=storage')
 /usr/bin/echo "INFO: Waiting 15s for virtual storage startup"
 /usr/bin/sleep 15s
