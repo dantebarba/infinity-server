@@ -28,7 +28,7 @@ apt-get update;
 apt-get -y install docker-ce docker-ce-cli containerd.io;
 adduser dockeruser;
 echo 'INFO: Installing Docker-compose';
-curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
+curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
 chmod +x /usr/local/bin/docker-compose;
 
 echo 'INFO: cloning repository';
@@ -84,7 +84,7 @@ echo "/swap none swap sw 0 0" >> /etc/fstab
 sysctl vm.swappiness=10
 free -m
 
-echo 'INFO: Services started successfully';
+echo 'INFO: Provisioning successful';
 ip=$(ip route get 1 | awk '{print $1;exit}');
 echo 'Access your qbittorrent instance at '${ip}':8080 with username admin and password adminadmin then change its password';
 echo 'Access your nzb instance at '${ip}':6789 with username nzbget and password nzbget then change its password';

@@ -16,7 +16,7 @@
 
 # docker clean up
 /usr/bin/echo "INFO: Removing dangling images"
-/usr/bin/curl --silent https://gist.githubusercontent.com/macropin/3d06cd315a07c9d8530f/raw | /bin/bash -s rm-dangling
+/usr/bin/docker image prune -a
 /usr/bin/echo "INFO: stopping all containers"
 /usr/bin/docker stop $(/usr/bin/docker ps -aq)
 /usr/bin/echo "INFO: Restarting gdrive sync"
