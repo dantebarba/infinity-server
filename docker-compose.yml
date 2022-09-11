@@ -10,6 +10,9 @@ services:
       - ${STORAGE_LOCATION}/gdrive:/config
     labels:
       - "group=storage"
+    profiles:
+      - fat
+      - tiny
     environment:
       SYNC_SRC: ${GDRIVE_SERVICE}:/watch
       SYNC_DEST: /source
@@ -28,6 +31,9 @@ services:
     volumes:
       - ${STORAGE_LOCATION}/downloads/torrent/complete:/source
       - ${STORAGE_LOCATION}/gdrive:/config
+    profiles:
+      - fat
+      - tiny
     labels:
       - "group=storage"
     environment:
@@ -50,6 +56,9 @@ services:
       - ${STORAGE_LOCATION}/gdrive:/config
     labels:
       - "group=storage"
+    profiles:
+      - fat
+      - tiny
     environment:
       SYNC_SRC: /source
       SYNC_DEST: ${GDRIVE_SERVICE}:/nzb/complete
@@ -68,6 +77,9 @@ services:
       - PUID=${PUID}
       - PGID=${PUID}
       - TZ=${DOCKER_TZ}
+    profiles:
+      - fat
+      - tiny
     volumes:
       - ${STORAGE_LOCATION}/nzbget:/config
       - ${STORAGE_LOCATION}/downloads/nzb:/downloads
@@ -82,6 +94,8 @@ services:
     restart: unless-stopped
     volumes:
       - ${STORAGE_LOCATION}/autoremove-torrents/config.yml:/app/config.yml
+    profiles:
+      - tiny
     environment:
       TZ: ${DOCKER_TZ}
       CRON: ${CRON}
@@ -96,6 +110,9 @@ services:
       - PGID=${PGID}
       - TZ=${DOCKER_TZ}
       - WEBUI_PORT=8080
+    profiles:
+      - fat
+      - tiny
     volumes:
       - ${STORAGE_LOCATION}/qbittorrent:/config
       - ${STORAGE_LOCATION}/downloads/torrent:/downloads
@@ -109,6 +126,9 @@ services:
   tracker-annunce:
     image: dantebarba/torrent-scripts:latest
     container_name: tracker-annunce
+    profiles:
+      - fat
+      - tiny
     environment: 
       QBT_USERNAME: ${QBT_USERNAME}
       QBT_PASSWORD: ${QBT_PASSWORD}
@@ -120,6 +140,9 @@ services:
   rclone-sa-autoswap:
     image: dantebarba/rclone-sa-autoswap:latest
     container_name: rclone-sa-autoswap
+    profiles:
+      - fat
+      - tiny
     volumes:
       - ${STORAGE_LOCATION}/gdrive:/config
     environment:
