@@ -16,7 +16,7 @@
 
 # docker clean up
 /usr/bin/echo "INFO: Removing dangling images"
-/usr/bin/docker image prune -a
+/usr/bin/docker image prune -a -f
 /usr/bin/echo "INFO: stopping all containers"
 /usr/bin/docker stop $(/usr/bin/docker ps -aq)
 /usr/bin/echo "INFO: Restarting gdrive sync"
