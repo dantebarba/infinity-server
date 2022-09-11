@@ -74,6 +74,16 @@ crontab -l | { cat; echo "@reboot $HOME/infinity-server/ccleaner.sh >> /var/log/
 echo 'INFO: starting services';
 chmod +x start.sh && bash start.sh;
 
+echo 'INFO: add a 2GB swap'
+dd if=/dev/zero of=/swap bs=4096 count=524288
+chown root:root /swap
+chmod 0600 /swap
+mkswap /swap
+swapon /swap
+echo "/swap none swap sw 0 0" >> /etc/fstab
+sysctl vm.swappiness=10
+free -m
+
 echo 'INFO: Services started successfully';
 ip=$(ip route get 1 | awk '{print $1;exit}');
 echo 'Access your qbittorrent instance at '${ip}':8080 with username admin and password adminadmin then change its password';
