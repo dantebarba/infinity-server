@@ -11,11 +11,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      ofelia.job-run.gdrive-move-watch.schedule: "@every 10s"
+      ofelia.job-run.gdrive-move-watch.schedule: "@every 15s"
       ofelia.job-run.gdrive-move-watch.container: "gdrive-move-watch"
-      ofelia.job-run.gdrive-move-torrents.schedule: "@every 20s"
+      ofelia.job-run.gdrive-move-torrents.schedule: "@every 25s"
       ofelia.job-run.gdrive-move-torrents.container: "gdrive-move-torrents"
-      ofelia.job-run.gdrive-move-nzb.schedule: "@every 25s"
+      ofelia.job-run.gdrive-move-nzb.schedule: "@every 30s"
       ofelia.job-run.gdrive-move-nzb.container: "gdrive-move-nzb"
 
   gdrive-move-watch:
