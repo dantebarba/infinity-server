@@ -22,6 +22,7 @@ services:
       ofelia.job-run.gdrive-move-torrents.container: "gdrive-move-torrents"
       ofelia.job-run.gdrive-move-nzb.schedule: "@every 30s"
       ofelia.job-run.gdrive-move-nzb.container: "gdrive-move-nzb"
+      group: "storage"
 
   gdrive-move-watch:
     image: rclone/rclone:1.59.2
@@ -93,7 +94,6 @@ services:
       CRON: ${CRON}
       OPTS: ${OPTS}
 
-
   qbittorrent:
     image: linuxserver/qbittorrent:14.3.2.99202012272006-7195-abb854a1eubuntu18.04.1-ls107
     container_name: qbittorrent
@@ -121,7 +121,7 @@ services:
     profiles:
       - fat
       - tiny
-    environment: 
+    environment:
       QBT_USERNAME: ${QBT_USERNAME}
       QBT_PASSWORD: ${QBT_PASSWORD}
       CMD: "/bin/bash /Scripts/AddqBittorrentTrackers.sh ."
