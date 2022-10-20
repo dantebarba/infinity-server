@@ -8,6 +8,9 @@ services:
     depends_on:
       - gdrive-move-watch
     command: daemon --docker
+    profiles:
+      - fat
+      - tiny
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
