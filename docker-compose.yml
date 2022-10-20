@@ -2,9 +2,9 @@ version: '3.9'
 
 services:
 
-  scheduler-gdrive-move-watch:
+  scheduler-gdrive-move:
     image: mcuadros/ofelia:latest
-    container_name: scheduler-gdrive-move-watch
+    container_name: scheduler-gdrive-move
     depends_on:
       - gdrive-move-watch
     command: daemon --docker
