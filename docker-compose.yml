@@ -1,10 +1,24 @@
 version: '3.9'
 
 services:
+
+  scheduler-gdrive-move-watch:
+    image: mcuadros/ofelia:latest
+    container_name: scheduler-gdrive-move-watch
+    depends_on:
+      - gdrive-move-watch
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-run.gdrive-move-watch.schedule: "@every 30s"
+      ofelia.job-run.gdrive-move-watch.container: "gdrive-move-watch"
+
   gdrive-move-watch:
-    image: pfidr/rclone:1.56.2
+    image: rclone/rclone:1.59.2
     container_name: gdrive-move-watch
-    restart: unless-stopped
+    restart: never
+    command: "move ${GDRIVE_SERVICE}:/watch /source --log-level ${LOG_LEVEL} --stats 120s --buffer-size 16M --drive-chunk-size 16M --use-mmap --timeout 30s"
     volumes:
       - ${STORAGE_LOCATION}/downloads/watch:/source
       - ${STORAGE_LOCATION}/gdrive:/config
@@ -13,16 +27,6 @@ services:
     profiles:
       - fat
       - tiny
-    environment:
-      SYNC_SRC: ${GDRIVE_SERVICE}:/watch
-      SYNC_DEST: /source
-      SYNC_OPTS: '--log-level ${LOG_LEVEL} --stats 120s --buffer-size 16M --drive-chunk-size 16M --use-mmap --timeout 30s'
-      RCLONE_DIR_CHECK_SKIP: 'true'
-      RCLONE_CMD: move
-      TZ: ${DOCKER_TZ}
-      CRON: ${MOVE_CRON}
-      UID: ${PUID}
-      GID: ${PGID}
 
   gdrive-move-torrents:
     image: pfidr/rclone:1.56.2
