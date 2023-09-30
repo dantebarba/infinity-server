@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   nzbget:
     image: linuxserver/nzbget
     container_name: nzbget
@@ -32,7 +31,6 @@ services:
       TZ: ${DOCKER_TZ}
       CRON: ${CRON}
       OPTS: ${OPTS}
-
 
   qbittorrent:
     image: linuxserver/qbittorrent:14.3.2.99202012272006-7195-abb854a1eubuntu18.04.1-ls107
