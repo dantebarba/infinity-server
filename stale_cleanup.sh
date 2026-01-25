@@ -1,50 +1,48 @@
 #!/bin/bash
 
 # -----------------------------
-# stale_cleanup
+# stale_cleanup (Terminal Output Only)
 # -----------------------------
 # Usage:
-#   stale_cleanup <days> <size_mb> <dir1> [dir2 ...]
+#   ./stale_cleanup.sh <days> <size_mb> <dir1> [dir2 ...]
 # -----------------------------
 
 set -e
-
-LOG_FILE="/var/log/stale-cleanup.log"
 
 DAYS="$1"
 SIZE_MB="$2"
 shift 2
 DIRS="$@"
 
+# Check if arguments are missing
 if [[ -z "$DAYS" || -z "$SIZE_MB" || -z "$DIRS" ]]; then
-  echo "Usage: stale_cleanup <days> <size_mb> <dir1> [dir2 ...]" | tee -a "$LOG_FILE"
+  echo "Usage: stale_cleanup <days> <size_mb> <dir1> [dir2 ...]"
   exit 1
 fi
 
-# Function to log to both console and file
-log_msg() {
-  echo "$1" | tee -a "$LOG_FILE"
-}
-
-log_msg "--------------------------------------------------"
-log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Starting stale cleanup"
-log_msg "Criteria: older than ${DAYS} days AND larger than ${SIZE_MB} MB"
-log_msg "Directories: $DIRS"
+echo "--------------------------------------------------"
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting stale cleanup"
+echo "Criteria: older than ${DAYS} days AND larger than ${SIZE_MB} MB"
+echo "Directories: $DIRS"
+echo "--------------------------------------------------"
 
 for DIR in $DIRS; do
   if [[ ! -d "$DIR" ]]; then
-    log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Skipping non-existent directory: $DIR"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - ERROR: Skipping non-existent directory: $DIR"
     continue
   fi
 
-  log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Processing directory: $DIR"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Processing directory: $DIR"
 
-  # -print shows the file, -delete removes it. 
-  # Using 2>&1 and tee to catch everything.
+  # -ls: Prints file details to console
+  # -delete: Removes the file
+  # Note: -delete must come AFTER the criteria (-mtime and -size)
   find "$DIR" -type f \
     -mtime +"$DAYS" \
     -size +"${SIZE_MB}M" \
-    -print -delete 2>&1 | tee -a "$LOG_FILE"
+    -ls \
+    -delete
 done
 
-log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Cleanup finished"
+echo "--------------------------------------------------"
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Cleanup finished"
