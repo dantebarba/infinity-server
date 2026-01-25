@@ -5,9 +5,6 @@
 # -----------------------------
 # Usage:
 #   stale_cleanup <days> <size_mb> <dir1> [dir2 ...]
-#
-# Example:
-#   stale_cleanup 30 100 /var/log /tmp /data/backups
 # -----------------------------
 
 set -e
@@ -24,23 +21,30 @@ if [[ -z "$DAYS" || -z "$SIZE_MB" || -z "$DIRS" ]]; then
   exit 1
 fi
 
-echo "--------------------------------------------------" >> "$LOG_FILE"
-echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting stale cleanup" >> "$LOG_FILE"
-echo "Criteria: older than ${DAYS} days AND larger than ${SIZE_MB} MB" >> "$LOG_FILE"
-echo "Directories: $DIRS" >> "$LOG_FILE"
+# Function to log to both console and file
+log_msg() {
+  echo "$1" | tee -a "$LOG_FILE"
+}
+
+log_msg "--------------------------------------------------"
+log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Starting stale cleanup"
+log_msg "Criteria: older than ${DAYS} days AND larger than ${SIZE_MB} MB"
+log_msg "Directories: $DIRS"
 
 for DIR in $DIRS; do
   if [[ ! -d "$DIR" ]]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Skipping non-existent directory: $DIR" >> "$LOG_FILE"
+    log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Skipping non-existent directory: $DIR"
     continue
   fi
 
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - Processing directory: $DIR" >> "$LOG_FILE"
+  log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Processing directory: $DIR"
 
+  # -print shows the file, -delete removes it. 
+  # Using 2>&1 and tee to catch everything.
   find "$DIR" -type f \
     -mtime +"$DAYS" \
     -size +"${SIZE_MB}M" \
-    -print -delete >> "$LOG_FILE" 2>&1
+    -print -delete 2>&1 | tee -a "$LOG_FILE"
 done
 
-echo "$(date '+%Y-%m-%d %H:%M:%S') - Cleanup finished" >> "$LOG_FILE"
+log_msg "$(date '+%Y-%m-%d %H:%M:%S') - Cleanup finished"
