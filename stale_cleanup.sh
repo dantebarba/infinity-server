@@ -1,24 +1,30 @@
 #!/bin/bash
 
 # -----------------------------
-# stale_cleanup (Terminal Output Only)
+# stale_cleanup (Terminal Only)
 # -----------------------------
 # Usage:
 #   ./stale_cleanup.sh <days> <size_mb> <dir1> [dir2 ...]
 # -----------------------------
 
+# Exit immediately if a command fails
 set -e
 
+# 1. Capture the first two arguments
 DAYS="$1"
 SIZE_MB="$2"
-shift 2
-DIRS="$@"
 
-# Check if arguments are missing
-if [[ -z "$DAYS" || -z "$SIZE_MB" || -z "$DIRS" ]]; then
+# 2. Check if arguments are missing BEFORE shifting
+# We check for $3 because at least one directory is required
+if [[ -z "$DAYS" || -z "$SIZE_MB" || -z "$3" ]]; then
   echo "Usage: stale_cleanup <days> <size_mb> <dir1> [dir2 ...]"
+  echo "Example: ./stale_cleanup.sh 30 100 /var/log"
   exit 1
 fi
+
+# 3. Shift only after we know we have arguments to shift
+shift 2
+DIRS="$@"
 
 echo "--------------------------------------------------"
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting stale cleanup"
@@ -34,15 +40,4 @@ for DIR in $DIRS; do
 
   echo "$(date '+%Y-%m-%d %H:%M:%S') - Processing directory: $DIR"
 
-  # -ls: Prints file details to console
-  # -delete: Removes the file
-  # Note: -delete must come AFTER the criteria (-mtime and -size)
-  find "$DIR" -type f \
-    -mtime +"$DAYS" \
-    -size +"${SIZE_MB}M" \
-    -ls \
-    -delete
-done
-
-echo "--------------------------------------------------"
-echo "$(date '+%Y-%m-%d %H:%M:%S') - Cleanup finished"
+  # -ls: Shows the file details (size, date)
